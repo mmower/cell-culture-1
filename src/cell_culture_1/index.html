@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script type="text/javascript" src="../../resources/bootstrap.js"></script>
+  <script type="text/javascript" src="../../resources/jquery-2.0.0.js"></script>
+  <script type="text/javascript" src="../../resources/raphael.js"></script>
+  <script type="text/javascript" src="../../resources/bootstrap-slider.js"></script>
+  <link rel="stylesheet" media="all" href="../../resources/bootstrap.css">
+  <link rel="stylesheet" media="all" href="../../resources/slider.css">
+  <script type="text/javascript" src="cellculture.js"></script>
+  <style type="text/css">
+    body {
+      background-color: #000000;
+    }
+
+    .container {
+      margin-left: 40px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <input id="pslider" type="text" value="" data-slider-min="10" data-slider-max="50" data-slider-step="0.1" data-slider-value="27.3" data-slider-handle="triangle">
+    <button id="control" onclick="javascript:toggleAnimation()">On/Off</button>
+    <div id="ui">
+    </div>
+  </div>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $("#pslider").slider().on("slideStop",function(ev) {
+        cellculture.live_p = ev.target.value / 100;
+        console.log( "P="+cellculture.live_p );
+      });
+      window.cell_animator = cellculture.setup( Raphael( "ui", 400, 400 ), 16 );
+      window.animator_interval = null;
+    });
+
+    function toggleAnimation() {
+      if( window.animator_interval ) {
+        clearInterval( window.animator_interval );
+        window.animator_interval = null;
+      } else {
+        window.animator_interval = setInterval( window.cell_animator, 250 );
+      }
+    }
+  </script>
+</body>
+</html>
+
