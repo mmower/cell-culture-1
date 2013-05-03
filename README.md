@@ -3,7 +3,7 @@
 Based on a possible misunderstanding of Christopher Langton's earliest experiment
 with artificial life.
 
-[See animation](http://htmlpreview.github.com/?./src/cell_culture_1/index.html)
+[See animation](http://htmlpreview.github.com/?https://github.com/mmower/cell-culture-1/blob/master/src/cell_culture_1/index.html)
 
 ## Credits
 
