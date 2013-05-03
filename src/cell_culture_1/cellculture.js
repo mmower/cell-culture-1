@@ -1,7 +1,7 @@
 (function( cellculture, $, undefined ) {
   cellculture.colourings = [
-    "#000000",
-    "#FFFF00"
+    "#FFFFFF",
+    "#FF0000"
   ];
 
   cellculture.live_p = 0.175;
@@ -39,7 +39,7 @@
         rect.y,
         rect.w,
         rect.h,
-        8
+        4
       );
     }
     return shapes;

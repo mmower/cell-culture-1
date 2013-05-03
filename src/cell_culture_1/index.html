@@ -10,7 +10,7 @@
   <script type="text/javascript" src="cellculture.js"></script>
   <style type="text/css">
     body {
-      background-color: #000000;
+      background-color: #FFFFFF;
     }
 
     .container {
@@ -21,8 +21,15 @@
 </head>
 <body>
   <div class="container">
+    <form onsubmit="return false;">
+    <label>Liveness probability</label>
     <input id="pslider" type="text" value="" data-slider-min="10" data-slider-max="50" data-slider-step="0.1" data-slider-value="27.3" data-slider-handle="triangle">
-    <button id="control" onclick="javascript:toggleAnimation()">On/Off</button>
+    <label>Animation delay</label>
+    <input id="tslider" type="text" value="" data-slider-min="100" data-slider-max="2500" data-slider-step="100" data-slider-value="250" data-slider-handle="triangle">
+    <br/>
+    <button id="transport" onclick="javascript:toggleAnimation();">Play</button>
+    <br/>
+    </form>
     <div id="ui">
     </div>
   </div>
@@ -30,18 +37,41 @@
     $(document).ready(function(){
       $("#pslider").slider().on("slideStop",function(ev) {
         cellculture.live_p = ev.target.value / 100;
-        console.log( "P="+cellculture.live_p );
       });
+
+      $("#tslider").slider().on("slideStop",function(ev){
+        window.frame_interval = ev.target.value;
+        if( isAnimating() ) {
+          stopAnimating();
+          startAnimating();
+        }
+      });
+
       window.cell_animator = cellculture.setup( Raphael( "ui", 400, 400 ), 16 );
       window.animator_interval = null;
+      window.frame_interval = 250;
     });
 
+    function isAnimating() {
+      return window.animator_interval;
+    }
+
+    function stopAnimating() {
+      clearInterval( window.animator_interval );
+      window.animator_interval = null;
+      $("#transport").html( "Play" );
+    }
+
+    function startAnimating() {
+      window.animator_interval = setInterval( window.cell_animator, window.frame_interval );
+      $("#transport").html( "Pause" );
+    }
+
     function toggleAnimation() {
-      if( window.animator_interval ) {
-        clearInterval( window.animator_interval );
-        window.animator_interval = null;
+      if( isAnimating() ) {
+        stopAnimating();
       } else {
-        window.animator_interval = setInterval( window.cell_animator, 250 );
+        startAnimating();
       }
     }
   </script>
